@@ -17,12 +17,13 @@ type Server struct {
 	Echo        *echo.Echo
 	Firebase    *firebase.App
 	Auth        *auth.Client
+	Config      *models.Config
 	Middlewares struct {
 		Auth *middlewares.Auth
 	}
 }
 
-func NewServer(ip *string) (svr *Server, err error) {
+func NewServer() (svr *Server, err error) {
 	e := echo.New()
 
 	// Read configuration file
@@ -71,9 +72,14 @@ func NewServer(ip *string) (svr *Server, err error) {
 		Echo:     e,
 		Firebase: firebaseApp,
 		Auth:     auth,
+		Config:   config,
 		Middlewares: struct{ Auth *middlewares.Auth }{
 			Auth: middlewares.NewAuth(auth),
 		},
 	}
 	return svr, nil
+}
+
+func (s *Server) Start() (err error) {
+	return s.Echo.Start(s.Config.HostIP)
 }

@@ -1,5 +1,14 @@
 package main
 
+import (
+	"log"
+	"main/core"
+)
+
 func main() {
-	println("Hello world")
+	server, err := core.NewServer()
+	if err != nil {
+		log.Fatal(err)
+	}
+	server.Start()
 }
