@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"main/core"
+	"main/core/routers"
 )
 
 func main() {
@@ -10,5 +11,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	// Assigning routers
+	routers.NewUser(server, "/v1/user")
+
 	server.Start()
 }

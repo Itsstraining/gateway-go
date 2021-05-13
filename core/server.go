@@ -2,11 +2,10 @@ package core
 
 import (
 	"context"
-	"main/middlewares"
-	"main/models"
-
 	"encoding/json"
 	"io/ioutil"
+	"main/middlewares"
+	"main/models"
 
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"

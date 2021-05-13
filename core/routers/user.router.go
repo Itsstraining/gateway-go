@@ -16,8 +16,8 @@ func NewUser(server *core.Server, route string) (err error, router *User) {
 	}
 
 	router.Router.GET("/profile", func(c echo.Context) error {
-		return c.NoContent(200)
-	})
+		return c.JSON(200, c.Get("authToken"))
+	}, server.Middlewares.Auth.Authorize)
 
 	return nil, router
 }

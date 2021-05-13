@@ -23,6 +23,7 @@ func (m *Auth) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 		authToken, err := m.auth.VerifyIDToken(context.Background(), token)
 		if err != nil {
 			c.Error(echo.ErrUnauthorized)
+			return nil
 		}
 		c.Set("authToken", authToken)
 		if err = next(c); err != nil {
