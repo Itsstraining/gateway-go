@@ -8,14 +8,19 @@ import (
 )
 
 type ContextV2 struct {
-	echo.Context
+	Context *echo.Context
+}
+
+func ToContextV2(ctx *echo.Context) *ContextV2 {
+	return &ContextV2{Context: ctx}
 }
 
 func (c *ContextV2) GetAuthToken() (*auth.Token, error) {
-	token := auth.Token{}
-	token, ok := c.Get("authToken").(auth.Token)
+	token := &auth.Token{}
+	t := (*c.Context).Get("authToken")
+	token, ok := t.(*auth.Token)
 	if !ok {
 		return nil, errors.New("Unauthorized user")
 	}
-	return &token, nil
+	return token, nil
 }

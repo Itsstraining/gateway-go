@@ -2,6 +2,7 @@ package middlewares
 
 import (
 	"context"
+	"fmt"
 
 	"firebase.google.com/go/v4/auth"
 	"github.com/labstack/echo/v4"
@@ -22,6 +23,7 @@ func (m *Auth) Authorize(next echo.HandlerFunc) echo.HandlerFunc {
 		token := c.Request().Header.Get("Authorization")
 		authToken, err := m.auth.VerifyIDToken(context.Background(), token)
 		if err != nil {
+			fmt.Println(err.Error())
 			c.Error(echo.ErrUnauthorized)
 			return nil
 		}

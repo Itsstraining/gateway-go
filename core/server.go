@@ -10,6 +10,7 @@ import (
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
 	"github.com/labstack/echo/v4"
+	"google.golang.org/api/option"
 )
 
 type Server struct {
@@ -56,9 +57,11 @@ func NewServer() (svr *Server, err error) {
 		return nil, err
 	}
 
+	opt := option.WithCredentialsFile(config.FirebaseConfig)
+
 	//Init Firebase admin
 
-	firebaseApp, err := firebase.NewApp(context.Background(), firebaseConfig)
+	firebaseApp, err := firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		return nil, err
 	}
