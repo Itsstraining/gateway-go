@@ -8,4 +8,5 @@ type Challenge struct {
 	Category    string     `json:"category"`
 	Languages   []string   `json:"languages"`
 	Testcases   []Testcase `json:"testcases"`
+	IsPublic    bool       `json:"isPublic"`
 }

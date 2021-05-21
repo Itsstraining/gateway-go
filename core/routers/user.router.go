@@ -17,7 +17,7 @@ func NewUser(server *core.Server, route string) (err error, router *User) {
 
 	router.Router.GET("/profile", func(c echo.Context) error {
 		ctx := core.ToContextV2(&c)
-		token, err := ctx.GetAuthToken()
+		token := ctx.GetAuthToken()
 		if err != nil {
 			return echo.ErrUnauthorized
 		}

@@ -13,6 +13,7 @@ func main() {
 	}
 	// Assigning routers
 	routers.NewUser(server, "/v1/user")
+	routers.NewChallenge(server, "/v1/challenge")
 
 	server.Start()
 }

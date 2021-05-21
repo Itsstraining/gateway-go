@@ -7,6 +7,7 @@ import (
 	"main/middlewares"
 	"main/models"
 
+	"cloud.google.com/go/firestore"
 	firebase "firebase.google.com/go/v4"
 	"firebase.google.com/go/v4/auth"
 	"github.com/labstack/echo/v4"
@@ -18,6 +19,7 @@ type Server struct {
 	Firebase    *firebase.App
 	Auth        *auth.Client
 	Config      *models.Config
+	Firestore   *firestore.Client
 	Middlewares struct {
 		Auth *middlewares.Auth
 	}
@@ -70,11 +72,14 @@ func NewServer() (svr *Server, err error) {
 		return nil, err
 	}
 
+	firestoreApp, err := firebaseApp.Firestore(context.Background())
+
 	svr = &Server{
-		Echo:     e,
-		Firebase: firebaseApp,
-		Auth:     auth,
-		Config:   config,
+		Echo:      e,
+		Firebase:  firebaseApp,
+		Auth:      auth,
+		Config:    config,
+		Firestore: firestoreApp,
 		Middlewares: struct{ Auth *middlewares.Auth }{
 			Auth: middlewares.NewAuth(auth),
 		},
